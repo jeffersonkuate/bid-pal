@@ -1,6 +1,6 @@
-#Bid Pal
+# Bid Pal
 
-##Introduction
+## Introduction
 
 This tool is intended to provide an intuitive and equitable method of distributing an arbitrary amount of assets between
 an arbitrary amount of players.
