@@ -116,7 +116,6 @@ def draft(game, display, rounds):
 def bid(game, display, starting_player, asset):
     participants = game.players.copy()
     cur_player = starting_player
-    leader = None
     bid_num = 0
     last_bid = 0
     next_bid = 0
@@ -138,7 +137,6 @@ def bid(game, display, starting_player, asset):
                 display_invalid(display)
                 continue
             else:
-                leader = bidder
                 bid_num += 1
                 cur_player += 1
                 continue
@@ -151,7 +149,6 @@ def bid(game, display, starting_player, asset):
             user_response = checked_input(display, display_string, PROMPT_YES_NO, REGEX_YES_NO)
 
             if match(REGEX_YES, user_response):
-                leader = bidder
                 last_bid = next_bid
                 next_bid = math.ceil(last_bid * BID_MULTIPLIER)
                 cur_player += 1
@@ -159,6 +156,7 @@ def bid(game, display, starting_player, asset):
 
         participants.remove(bidder)
 
+    leader = participants[0]
     leader.debit(last_bid)
     display.input(leader.name + " has won the bid. They have a current balance of "
                   + str(leader.balance),

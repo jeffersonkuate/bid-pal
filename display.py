@@ -19,7 +19,7 @@ class Display:
         self.redraw()
         if '' != prompt:
             print(DIVIDER, end='')
-            print(prompt)
+            print(prompt, end="\n\n")
 
         return input()
 
