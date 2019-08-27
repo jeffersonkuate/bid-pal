@@ -53,6 +53,10 @@ class Game:
         self.drafted.append(asset)
         player.assets.append(asset)
 
+    # TODO: implement this method to allow for further manipulation of assets during event loop
+    def play_round(self, display):
+        pass
+
     def __str__(self):
         string = ""
 
@@ -81,9 +85,11 @@ class Player:
         self.assets = []
         self.next_player = None
 
+    # Subtracts amount from player's current balance
     def debit(self, amount):
         self.balance -= amount
 
+    # Adds amount to player's current balance
     def credit(self, amount):
         self.balance += amount
 
@@ -113,9 +119,10 @@ def draft(game, display, rounds):
         game.draft_asset(asset, winner)
 
 
-def bid(game, display, starting_player, asset):
+# Initiates the process of players bidding on an asset, starting with the player at the starting_player_index
+def bid(game, display, starting_player_index, asset):
     participants = game.players.copy()
-    cur_player = starting_player
+    cur_player = starting_player_index
     bid_num = 0
     last_bid = 0
     next_bid = 0
@@ -164,6 +171,7 @@ def bid(game, display, starting_player, asset):
     return leader
 
 
+# Finds an asset by name within a list of assets
 def find_asset(asset_name, asset_list):
     asset_obj = None
     for asset in asset_list:
@@ -176,6 +184,7 @@ def find_asset(asset_name, asset_list):
     return asset_obj
 
 
+# Accepts and returns user input. Will re-prompt user until input satisfies reg pattern
 def checked_input(display, string='', prompt='', reg=REGEX_ALL):
     user_input = display.input(string, prompt)
     while not match(reg, user_input):
@@ -184,22 +193,22 @@ def checked_input(display, string='', prompt='', reg=REGEX_ALL):
     return user_input
 
 
+# Displays an Invalid prompt that must be dismissed by user
 def display_invalid(display):
     display.input(INVALID, PROMPT_ENTER)
 
 
+# Case insensitive re.search wrapper (also strips off match object info)
 def search(reg, string):
     return not (re.search(reg.lower(), string.lower()) is None)
 
 
+# Case insensitive re.match wrapper (also strips off match object info)
 def match(reg, string):
     return not (re.match(reg.lower(), string.lower()) is None)
 
 
-def play_round(game):
-    pass
-
-
+# Event loop
 def main():
     # -------------------
     # INITIATION
@@ -244,7 +253,7 @@ def main():
         elif match(REGEX_INFO, user_input):
             display.input(str(game) + "\n Press Enter to continue")
         else:
-            play_round(game)
+            game.play_round(display)
             turn += 1
 
 
