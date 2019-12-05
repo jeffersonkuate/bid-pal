@@ -5,6 +5,11 @@
 This tool is intended to provide an intuitive and equitable method of distributing an arbitrary amount of assets between
 an arbitrary amount of players.
 
+Run inside the `bid-pal` base directory with
+```
+python3 bid_pal.py
+```
+
 The drafting process is as follows.
 1. The first player enters the name of an asset as listed in a user defined list under the `assetSets` attribute of the
 `config.json` file. The specific list to be used is determined by the `assetSet` (singular) attribute.
